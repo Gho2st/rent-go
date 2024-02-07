@@ -1,0 +1,38 @@
+.Container {
+  position: relative;
+  cursor: pointer;
+}
+.avatarContainer:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.avatarContainer svg {
+  font-size: 2rem;
+}
+.avatarContainer {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid black;
+  border-radius: 2rem;
+}
+.burger {
+  margin-right: 1rem;
+}
+
+.openMenuContainer {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 0.5rem 1.3rem;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 70px;
+  left: -190px;
+  width: 300px;
+  border-radius: 1rem;
+}
+.openMenuContainer a {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.openMenuContainer a:hover {
+  color: grey;
+}

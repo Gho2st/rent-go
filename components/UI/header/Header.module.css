@@ -1,0 +1,13 @@
+.Container{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}
+.logoContainer{
+    font-size: 1.5rem;
+}
+
+.middleNav a{
+    margin: 1rem;
+}
+
