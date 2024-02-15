@@ -1,0 +1,15 @@
+.rentContainer{
+    width: 50%;
+    margin: auto;
+    margin-top: 6rem;
+    text-align: center;
+}
+.form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 3rem;
+}
+.form input{
+    margin-top: 2rem;
+}

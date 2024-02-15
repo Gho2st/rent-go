@@ -8,17 +8,29 @@ export default function SearchBar() {
       <form className={classes.searchDetails}>
         <div className={classes.searchItem}>
           <label className={classes.label} htmlFor="placeInput">
-            Miejsce:
+            Miejsce
           </label>
           <input type="text" id="placeInput" placeholder="Wpisz miejsce..." />
         </div>
         <div className={classes.searchItem}>
-          <h3>Początek</h3>
-          <p>Wrz 4, 11:00</p>
+          <label className={classes.label} htmlFor="startDateInput">
+            Początek
+          </label>
+          <input
+            type="date"
+            id="startDateInput"
+            placeholder="Wpisz miejsce..."
+          />
         </div>
         <div className={classes.searchItem}>
-          <h3>Koniec</h3>
-          <p>Wrz 4, 11:00</p>
+          <label className={classes.label} htmlFor="endDateInput">
+            Koniec
+          </label>
+          <input
+            type="date"
+            id="endDateInput"
+            placeholder="Wpisz miejsce..."
+          />
         </div>
         <div className={classes.searchIcon}>
           <button type="submit">
