@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "../../app/AuthContext";
+import { useAuth } from "../../AuthContext";
 import classes from "./LogIn.module.css";
+import { signIn } from "next-auth/react";
 
 export default function LogIn(props) {
   const { isLoggedIn, login, logout } = useAuth();
@@ -34,7 +35,11 @@ export default function LogIn(props) {
       if (response.ok) {
         const data = await response.json();
         console.log(data.message); // Możesz obsłużyć odpowiedź serwera tutaj
-        login();
+        const token = data.token;
+        // token is available --> proceed with login
+        if (token) {
+          login();
+        }
       } else {
         console.error("Błąd podczas logowania");
       }
@@ -43,9 +48,12 @@ export default function LogIn(props) {
     }
   };
 
+ 
+
   return isLoggedIn ? (
     <>
       <p className={classes.loggedP}>You are logged in.</p>
+      <button>chcesz zmienic haslo?</button>
     </>
   ) : (
     <div className={classes.formContainer}>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
+import bcrypt from "bcrypt"
 
 // function to check password strength
 
@@ -68,13 +69,17 @@ export async function POST(req, res) {
       });
     }
 
+    // hash the password before storing it
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
     // insert data into the database
     const [results, fields] = await pool.execute(
       "INSERT INTO uzytkownicy (email, password, firstName, lastName) VALUES (?, ?, ?, ?)",
-      [data.email, data.password, data.firstName, data.lastName]
+      [data.email, hashedPassword, data.firstName, data.lastName]
     );
     return NextResponse.json({
       message: "Registration succesfull",
+      success: 'success'
     });
   } catch (error) {
     console.log("error inserting data into the database", error);

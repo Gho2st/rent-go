@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+function generateToken(id) {
+  const secretKey = "julcion"; // Replace with your actual secret key
+  const token = jwt.sign({ id }, secretKey, { expiresIn: "1h" }); // You can customize the expiration time
+  return token;
+}
+
 
 export async function POST(req, res) {
   try {
@@ -32,18 +41,25 @@ export async function POST(req, res) {
       });
     }
 
-    //compare the provided password with this in database
-    if (exisitingUsers[0].password !== data.password) {
+    //compare the provided password with this in database (the hashed one)
+    const isPasswordMatch = await bcrypt.compare(
+      data.password,
+      exisitingUsers[0].password
+    );
+
+    if (!isPasswordMatch) {
       return NextResponse.json({
-        message: "Incorrect password",
-      });
+        message: "Incorrect password"
+      })
     }
+
+    const token = generateToken(exisitingUsers[0].id)
 
     // successfull login (demo)
     return NextResponse.json({
-        message: "Login succesful"
-    })
-
+      message: "Login succesful",
+      token: token,
+    });
   } catch (error) {
     console.log("error during login: ", error);
     return NextResponse.json({
