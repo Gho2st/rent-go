@@ -4,9 +4,12 @@ import Link from "next/link";
 import { RxAvatar } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useState} from "react";
+import { useAuth } from "@/app/AuthContext";
 
 export default function RightNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn, login, logout, setIsLoginForm  } = useAuth();
+
   
 
   function menuClickHandler() {
@@ -15,6 +18,11 @@ export default function RightNav() {
 
   function chooseMenuLink(){
     setIsMenuOpen(false)
+  }
+
+  function handleIsLoginFormChange(){
+    console.log('click')
+    setIsLoginForm(true)
   }
 
   return (
@@ -28,9 +36,11 @@ export default function RightNav() {
           {isMenuOpen && (
             <div className={classes.openMenuContainer}>
               <Link href={"/rejestracja"} onClick={chooseMenuLink}>Zarejestruj się</Link>
-              <Link href={"/zaloguj"}>Zaloguj się</Link>
-              <Link href={"/wynajmij"}>Wynajmij swój pojazd na Rent&Go</Link>
-              <Link href={"/rejestracja"}>Centrum Pomocy</Link>
+              {isLoggedIn && <Link href={"/logowanie"} onClick={chooseMenuLink}>Panel uzytkownika</Link>}
+              <Link href={"/logowanie"} onClick={chooseMenuLink}>Zaloguj się</Link>
+              <Link href={"/wynajmij"} onClick={chooseMenuLink}>Wynajmij swój pojazd na Rent&Go</Link>
+              <Link href={"/rejestracja"} onClick={chooseMenuLink}>Centrum Pomocy</Link>
+              {isLoggedIn && <button onClick={logout} >wyloguj sie</button>}
             </div>
           )}
         </div>

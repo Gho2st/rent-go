@@ -4,45 +4,72 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import classes from "./page.module.css";
 
+
 export default function wynajmij() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [price, setPrice] = useState(null);
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
 
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-    console.log(title);
+  const initialFormState = {
+    title: "",
+    description: "",
+    selectedImages: [],
+    price: null,
+    dateRange: [null, null],
+    mileage: null,
+    brand: "",
+    model: "",
+    productionYear: null,
+    rentPlace: "",
+    phoneNumber: "",
+    seatsNumber: null,
+    engine: "",
+    enginePower: null,
   };
+  const [formState, setFormState] = useState(initialFormState);
 
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
+  const handleInputChange = (fieldName, value) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
   };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
 
-    if (selectedImages.length + files.length > 8) {
+    if (formState.selectedImages.length + files.length > 8) {
       alert("You can upload a maximum of 8 images.");
       return;
     }
 
-    setSelectedImages((prevImages) => [...prevImages, ...files]);
+    handleInputChange("selectedImages", [
+      ...formState.selectedImages,
+      ...files,
+    ]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Title:", title);
-    console.log("Description:", description);
-    console.log("Images:", selectedImages);
-    console.log("Selected Start Date:", startDate);
-    console.log("Selected End Date:", endDate);
+    try {
+      const response = await fetch("http://localhost:3000/api/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message); // Możesz obsłużyć odpowiedź serwera tutaj
+      } else {
+        console.error("Błąd przy dodawaniu ogłoszenia");
+      }
+    } catch (error) {
+      console.error("Błąd przy dodawaniu ogłoszenia:", error);
+    }
+
+    // Perform form submission logic with formState
+    console.log("Form State:", formState);
   };
 
   return (
@@ -55,7 +82,7 @@ export default function wynajmij() {
             type="text"
             name="title"
             id="title"
-            onChange={handleTitleChange}
+            onChange={(e) => handleInputChange("title", e.target.value)}
           ></input>
         </label>
         <label>
@@ -64,16 +91,96 @@ export default function wynajmij() {
             type="text"
             name="description"
             id="description"
-            onChange={handleDescriptionChange}
+            onChange={(e) => handleInputChange("description", e.target.value)}
           ></input>
         </label>
         <label>
-          Cena
+          Cena za dzień
           <input
             type="number"
             name="price"
             id="price"
-            onChange={handlePriceChange}
+            onChange={(e) => handleInputChange("price", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Przebieg
+          <input
+            type="number"
+            name="mileage"
+            id="mileage"
+            onChange={(e) => handleInputChange("mileage", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Marka
+          <input
+            type="text"
+            name="brand"
+            id="brand"
+            onChange={(e) => handleInputChange("brand", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Model
+          <input
+            type="text"
+            name="model"
+            id="model"
+            onChange={(e) => handleInputChange("model", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Rok produkcji
+          <input
+            type="number"
+            name="productionYear"
+            id="productionYear"
+          ></input>
+        </label>
+        <label>
+          Ilość miejsc
+          <input
+            type="number"
+            name="seatsNumber"
+            id="seatsNumber"
+            onChange={(e) => handleInputChange("seatsNumber", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Miejsce wynajmu
+          <input
+            type="text"
+            name="rentPlace"
+            id="rentPlace"
+            onChange={(e) => handleInputChange("rentPlace", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Silnik
+          <input
+            type="text"
+            name="engine"
+            id="engine"
+            onChange={(e) => handleInputChange("engine", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Moc silnika
+          <input
+            type="number"
+            name="enginePower"
+            id="enginePower"
+            onChange={(e) => handleInputChange("enginePower", e.target.value)}
+          ></input>
+        </label>
+        <label>
+          Numer telefonu
+          <input
+            type="number"
+            name="phoneNumber"
+            id="phoneNumber"
+            onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
           ></input>
         </label>
         <label>
@@ -90,11 +197,9 @@ export default function wynajmij() {
           Wybierz datę dostępności
           <DatePicker
             selectsRange={true}
-            startDate={startDate}
-            endDate={endDate}
-            onChange={(update) => {
-              setDateRange(update);
-            }}
+            startDate={formState.dateRange[0]}
+            endDate={formState.dateRange[1]}
+            onChange={(update) => handleInputChange("dateRange", update)}
           />
         </label>
 

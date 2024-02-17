@@ -1,6 +1,7 @@
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/UI/header/Header";
+import { AuthProvider } from "./AuthContext";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -13,8 +14,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pl">
       <body className={montserrat.className}>
-        <Header />
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

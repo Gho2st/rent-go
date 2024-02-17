@@ -1,8 +1,11 @@
-import Image from "next/image";
+"use client";
 import styles from "./page.module.css";
-import Header from "@/components/UI/header/Header";
 import Homepage from "@/components/homepage/Homepage";
+import { useAuth } from "./AuthContext";
+import LogIn from "@/components/Logged/LogIn";
 
 export default function Home() {
-  return <Homepage/>;
+  const { setIsLoginForm, isLoginForm, isLoggedIn } = useAuth();
+
+  return isLoginForm ? <LogIn /> : <Homepage />;
 }

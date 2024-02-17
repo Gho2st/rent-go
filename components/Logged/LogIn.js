@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "../../app/AuthContext";
 import classes from "./LogIn.module.css";
 
-export default function LogIn() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export default function LogIn(props) {
+  const { isLoggedIn, login, logout } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,7 +34,7 @@ export default function LogIn() {
       if (response.ok) {
         const data = await response.json();
         console.log(data.message); // Możesz obsłużyć odpowiedź serwera tutaj
-        setIsLoggedIn(true);
+        login();
       } else {
         console.error("Błąd podczas logowania");
       }
@@ -43,7 +44,9 @@ export default function LogIn() {
   };
 
   return isLoggedIn ? (
-    <p>You are logged in.</p>
+    <>
+      <p className={classes.loggedP}>You are logged in.</p>
+    </>
   ) : (
     <div className={classes.formContainer}>
       <form onSubmit={handleSubmit} className={classes.form}>
