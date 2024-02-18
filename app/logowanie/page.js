@@ -1,13 +1,20 @@
-'use client'
-import LogIn from "./Logged/LogIn";
+import { getServerSession } from "next-auth";
+import Form from "./form";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 import classes from "./page.module.css";
-import { useAuth } from "../AuthContext";
 
-export default function logowanie() {
-  const { setIsLoginForm, isLoginForm, isLoggedIn } = useAuth();
+export default async function LoginPage() {
+  const session = await getServerSession();
+  if (session) {
+    redirect("/");
+  }
   return (
     <>
-      <LogIn />
+      <Form />
+      <Link className={classes.text} href={"/rejestracja"}>
+        Nie masz jeszcze konta?
+      </Link>
     </>
   );
 }

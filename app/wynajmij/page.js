@@ -1,10 +1,16 @@
-"use client";
-import classes from "./page.module.css";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 import Rent from "./Rent";
-import { useAuth } from "../AuthContext";
 
-export default function wynajmij() {
-  const { setIsLoginForm, isLoginForm, isLoggedIn } = useAuth();
+export default async function wynajmij() {
+  const session = await getServerSession();
+  if (!session || !session.user) {
+    redirect("/api/auth/signin");
+  }
 
-  return <div>{isLoggedIn ? <Rent/> : <p>zaloguj sie</p>}</div>;
+  return (
+    <div>
+      <Rent/>
+    </div>
+  );
 }

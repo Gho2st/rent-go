@@ -3,33 +3,28 @@ import classes from "./RightNav.module.css";
 import Link from "next/link";
 import { RxAvatar } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useState } from "react";
-// import { useAuth } from "@/app/AuthContext";
+import { useState, useEffect, useRef } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function RightNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const { isLoggedIn, login, logout, setIsLoginForm  } = useAuth();
+  const menuRef = useRef(null);
 
-  function AuthButton() {
-    const { data: session } = useSession();
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    // event listener to the body when the component mounts
+    document.body.addEventListener("click", handleClickOutside);
 
-    if (session) {
-      return (
-        <>
-          {session?.user?.name} <br />
-          <button onClick={() => signOut()}>Sign out</button>
-        </>
-      );
-    }
+    // remove the event listener when the component unmounts
 
-    return (
-      <>
-        Not signed in <br />
-        <button onClick={() => signIn()}>Sign in </button>
-      </>
-    );
-  }
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuRef]);
 
   function menuClickHandler() {
     setIsMenuOpen(!isMenuOpen);
@@ -38,12 +33,23 @@ export default function RightNav() {
   function chooseMenuLink() {
     setIsMenuOpen(false);
   }
+  function AuthButton() {
+    const { data: session } = useSession();
 
-  function handleIsLoginFormChange() {
-    console.log("click");
-    setIsLoginForm(true);
+    if (session) {
+      return (
+        <>
+          <button onClick={() => signOut()}>Wyloguj się</button>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <button onClick={() => signIn()}>Zaloguj się </button>
+      </>
+    );
   }
-
   return (
     <>
       <div className={classes.Container}>
@@ -53,13 +59,9 @@ export default function RightNav() {
             <RxAvatar />
           </div>
           {isMenuOpen && (
-            <div className={classes.openMenuContainer}>
+            <div className={classes.openMenuContainer} ref={menuRef}>
               <Link href={"/rejestracja"} onClick={chooseMenuLink}>
                 Zarejestruj się
-              </Link>
-              
-              <Link href={"/logowanie"} onClick={chooseMenuLink}>
-                Zaloguj się
               </Link>
               <Link href={"/wynajmij"} onClick={chooseMenuLink}>
                 Wynajmij swój pojazd na Rent&Go
@@ -67,7 +69,7 @@ export default function RightNav() {
               <Link href={"/rejestracja"} onClick={chooseMenuLink}>
                 Centrum Pomocy
               </Link>
-              <AuthButton/>
+              <AuthButton />
             </div>
           )}
         </div>
