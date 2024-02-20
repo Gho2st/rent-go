@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import Rent from "./Rent";
 
 export default async function wynajmij() {
   const session = await getServerSession();
@@ -10,7 +9,7 @@ export default async function wynajmij() {
 
   return (
     <div>
-      <Rent />
+      <h1>Hi, this is your dashboard bro enjoy it!</h1>
     </div>
   );
 }

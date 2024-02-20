@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.515.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.9",
@@ -16,6 +17,7 @@
     "@mui/x-date-pickers": "^6.19.4",
     "@mui/x-date-pickers-pro": "^6.19.4",
     "@react-icons/all-files": "^4.1.0",
+    "aws-sdk": "^2.1560.0",
     "bcrypt": "^5.1.1",
     "dayjs": "^1.11.10",
     "jsonwebtoken": "^9.0.2",

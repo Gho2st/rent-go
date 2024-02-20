@@ -9,22 +9,23 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default function RightNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const { data: session } = useSession();
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
-      }
-    };
-    // event listener to the body when the component mounts
-    document.body.addEventListener("click", handleClickOutside);
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (menuRef.current && !menuRef.current.contains(event.target)) {
+  //       setIsMenuOpen(false);
+  //     }
+  //   };
 
-    // remove the event listener when the component unmounts
+  //   // Add the event listener to the document.body
+  //   document.body.addEventListener("click", handleClickOutside);
 
-    return () => {
-      document.body.removeEventListener("click", handleClickOutside);
-    };
-  }, [menuRef]);
+  //   // Remove the event listener when the component unmounts
+  //   return () => {
+  //     document.body.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, [menuRef]);
 
   function menuClickHandler() {
     setIsMenuOpen(!isMenuOpen);
@@ -34,8 +35,6 @@ export default function RightNav() {
     setIsMenuOpen(false);
   }
   function AuthButton() {
-    const { data: session } = useSession();
-
     if (session) {
       return (
         <>
@@ -66,6 +65,7 @@ export default function RightNav() {
               <Link href={"/wynajmij"} onClick={chooseMenuLink}>
                 Wynajmij swój pojazd na Rent&Go
               </Link>
+              {session && <Link href={"/panel-uzytkownika"}>Panel uzytkownika</Link>}
               <Link href={"/rejestracja"} onClick={chooseMenuLink}>
                 Centrum Pomocy
               </Link>

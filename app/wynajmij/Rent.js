@@ -1,27 +1,20 @@
-'use client'
+"use client";
 import classes from "./Rent.module.css";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-
+import { useSession } from "next-auth/react";
 
 export default function Rent() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
   const initialFormState = {
     title: "",
     description: "",
     selectedImages: [],
     price: null,
     dateRange: [null, null],
-    mileage: null,
-    brand: "",
-    model: "",
-    productionYear: null,
-    rentPlace: "",
     phoneNumber: "",
-    seatsNumber: null,
-    engine: "",
-    enginePower: null,
   };
   const [formState, setFormState] = useState(initialFormState);
 
@@ -55,11 +48,16 @@ export default function Rent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formState),
+        body: JSON.stringify({
+          ...formState,
+          userId,
+        }),
       });
 
       if (response.ok) {
         const data = await response.json();
+        console.log("hej user id to ");
+        console.log(userId);
         console.log(data.message); // Możesz obsłużyć odpowiedź serwera tutaj
       } else {
         console.error("Błąd przy dodawaniu ogłoszenia");
@@ -69,7 +67,6 @@ export default function Rent() {
     }
 
     // Perform form submission logic with formState
-    console.log("Form State:", formState);
   };
   return (
     <div className={classes.rentContainer}>
@@ -102,77 +99,7 @@ export default function Rent() {
             onChange={(e) => handleInputChange("price", e.target.value)}
           ></input>
         </label>
-        <label>
-          Przebieg
-          <input
-            type="number"
-            name="mileage"
-            id="mileage"
-            onChange={(e) => handleInputChange("mileage", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Marka
-          <input
-            type="text"
-            name="brand"
-            id="brand"
-            onChange={(e) => handleInputChange("brand", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Model
-          <input
-            type="text"
-            name="model"
-            id="model"
-            onChange={(e) => handleInputChange("model", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Rok produkcji
-          <input
-            type="number"
-            name="productionYear"
-            id="productionYear"
-          ></input>
-        </label>
-        <label>
-          Ilość miejsc
-          <input
-            type="number"
-            name="seatsNumber"
-            id="seatsNumber"
-            onChange={(e) => handleInputChange("seatsNumber", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Miejsce wynajmu
-          <input
-            type="text"
-            name="rentPlace"
-            id="rentPlace"
-            onChange={(e) => handleInputChange("rentPlace", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Silnik
-          <input
-            type="text"
-            name="engine"
-            id="engine"
-            onChange={(e) => handleInputChange("engine", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Moc silnika
-          <input
-            type="number"
-            name="enginePower"
-            id="enginePower"
-            onChange={(e) => handleInputChange("enginePower", e.target.value)}
-          ></input>
-        </label>
+
         <label>
           Numer telefonu
           <input

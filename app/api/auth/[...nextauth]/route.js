@@ -6,6 +6,22 @@ import { compare } from "bcrypt";
 import pool from "@/lib/db";
 
 const handler = NextAuth({
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub;
+        console.log("User ID from session:", session.user.id);
+      }
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+        console.log("User ID from JWT:", token.uid);
+      }
+      return token;
+    },
+  },
   session: {
     strategy: "jwt",
   },
@@ -41,7 +57,7 @@ const handler = NextAuth({
         );
 
         console.log({ passwordCorrect });
-        console.log(user)
+        console.log(user);
 
         if (passwordCorrect) {
           return {
