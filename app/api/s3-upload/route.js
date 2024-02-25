@@ -22,7 +22,9 @@ async function uploadFileToS3(file, fileName) {
 
   const command = new PutObjectCommand(params);
   await s3Client.send(command);
-  return fileName;
+
+  const s3Url = `https://rent-go.s3.eu-central-1.amazonaws.com/${fileName}`;
+  return s3Url;
 }
 
 export async function POST(request) {
@@ -35,9 +37,9 @@ export async function POST(request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const fileName = await uploadFileToS3(buffer, file.name);
+    const url = await uploadFileToS3(buffer, file.name);
 
-    return NextResponse.json({ success: true, fileName });
+    return NextResponse.json({ success: true, url });
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(

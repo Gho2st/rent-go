@@ -1,136 +1,100 @@
 "use client";
-import classes from "./Rent.module.css";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
-export default function Rent() {
+const Rent = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const initialFormState = {
     title: "",
-    description: "",
-    selectedImages: [],
-    price: null,
-    dateRange: [null, null],
-    phoneNumber: "",
+    userId: userId,
   };
+
+  const [files, setFiles] = useState([]);
+  const [uploading, setUploading] = useState(false);
   const [formState, setFormState] = useState(initialFormState);
+  const [success, setSuccess] = useState(false);
+  const [urls, setUrls] = useState([]); // Move urls state to a higher scope
 
-  const handleInputChange = (fieldName, value) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [fieldName]: value,
-    }));
-  };
-
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-
-    if (formState.selectedImages.length + files.length > 8) {
-      alert("You can upload a maximum of 8 images.");
-      return;
-    }
-
-    handleInputChange("selectedImages", [
-      ...formState.selectedImages,
-      ...files,
-    ]);
+  const handleFileChange = (e) => {
+    setFiles((prevFiles) => [...prevFiles, ...Array.from(e.target.files)]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (files.length === 0) return;
+
+    setUploading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formState,
-          userId,
-        }),
+      const uploadPromises = files.map(async (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const response = await fetch("/api/s3-upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        console.log(data);
+        console.log(data.success);
+        if (data.success === true) {
+          setSuccess(true);
+        }
+
+        return data.url;
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("hej user id to ");
-        console.log(userId);
-        console.log(data.message); // Możesz obsłużyć odpowiedź serwera tutaj
-      } else {
-        console.error("Błąd przy dodawaniu ogłoszenia");
-      }
+      const uploadedUrls = await Promise.all(uploadPromises);
+      setUrls(uploadedUrls); // Set urls state with the uploaded URLs
+      console.log(urls); // Array of uploaded image URLs
     } catch (error) {
-      console.error("Błąd przy dodawaniu ogłoszenia:", error);
+      console.error(error);
+    } finally {
+      setUploading(false);
     }
-
-    // Perform form submission logic with formState
   };
+
+  useEffect(() => {
+    if (success) {
+      const sendToApi = async () => {
+        console.log("wyslane do add api");
+        const imageUrls = urls;
+
+        const saveResponse = await fetch("/api/add", {
+          method: "POST",
+          body: JSON.stringify({ imageUrls }),
+        });
+
+        const saveData = await saveResponse.json();
+      };
+
+      sendToApi();
+    }
+  }, [success, urls]);
+
   return (
-    <div className={classes.rentContainer}>
-      <h1>Wynajmij swoj pojazd na Rent&Go</h1>
-      <form className={classes.form} onSubmit={handleSubmit}>
+    <>
+      <h1>Upload Files to S3 Bucket</h1>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          multiple
+        />
         <label>
           Tytuł
-          <input
-            type="text"
-            name="title"
-            id="title"
-            onChange={(e) => handleInputChange("title", e.target.value)}
-          ></input>
+          <input type="text" id="title" name="title"></input>
         </label>
-        <label>
-          Opis
-          <input
-            type="text"
-            name="description"
-            id="description"
-            onChange={(e) => handleInputChange("description", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Cena za dzień
-          <input
-            type="number"
-            name="price"
-            id="price"
-            onChange={(e) => handleInputChange("price", e.target.value)}
-          ></input>
-        </label>
-
-        <label>
-          Numer telefonu
-          <input
-            type="number"
-            name="phoneNumber"
-            id="phoneNumber"
-            onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-          ></input>
-        </label>
-        <label>
-          Dodaj zdjęcia (max 8)
-          <input
-            type="file"
-            name="images"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-          />
-        </label>
-        <label>
-          Wybierz datę dostępności
-          <DatePicker
-            selectsRange={true}
-            startDate={formState.dateRange[0]}
-            endDate={formState.dateRange[1]}
-            onChange={(update) => handleInputChange("dateRange", update)}
-          />
-        </label>
-
-        <button type="submit">Wynajmij</button>
+        <button type="submit" disabled={uploading}>
+          {uploading ? "Uploading..." : "Upload"}
+        </button>
       </form>
-    </div>
+    </>
   );
-}
+};
+
+export default Rent;
