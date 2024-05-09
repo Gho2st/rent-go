@@ -1,0 +1,74 @@
+.footerContainer {
+  background: black;
+  color: white;
+  padding: 2rem 9%;
+}
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 0;
+}
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input input {
+  width: 300px;
+  padding: 1rem;
+  background-color: black;
+  border: 0;
+  color: white;
+  font-size: 1rem;
+  border-bottom: 1px solid grey;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 3rem;
+  background: rgb(236, 236, 105);
+  width: 50px;
+  height: 50px;
+  color: black;
+  font-size: 1.8rem;
+  border-radius: 1rem;
+}
+.icon:hover {
+  scale: 1.1;
+  cursor: pointer;
+}
+.topContainer h5 {
+  font-size: 2.5rem;
+  width: 30%;
+}
+
+.middleContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 0;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+}
+.linksContainer h6 {
+  font-size: 1.5rem;
+}
+.linksContainer a {
+  margin-top: 1rem;
+  color: grey;
+}
+.linksContainer a:hover {
+  color: yellow;
+}
+
+.downContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 0;
+}
+.downContainer h6 {
+  font-size: 1rem;
+}

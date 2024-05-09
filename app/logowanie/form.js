@@ -2,6 +2,9 @@
 import classes from "./form.module.css";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { MdLogin } from "react-icons/md";
+import { FaFacebook } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 
 export default function Form() {
   const router = useRouter();
@@ -44,24 +47,38 @@ export default function Form() {
       <div className={classes.container}>
         <form onSubmit={handleSubmit} className={classes.form}>
           <label htmlFor="email">
-            email
-            <input name="email" id="email" type="email" />
+            Email
+            <input
+              name="email"
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+            />
           </label>
           <label htmlFor="password">
-            password
-            <input name="password" id="password" type="password" />
+            Password
+            <input
+              name="password"
+              id="password"
+              type="password"
+              placeholder="password"
+            />
           </label>
-          <button type="submit">Login</button>
+          <button type="submit">
+            Login <MdLogin className={classes.icon} />
+          </button>
         </form>
         <div className={classes.buttonsContainer}>
           <button className={classes.githubButton} onClick={handleSubmitGithub}>
-            logowanie przez github
+            <FaGithub className={classes.icon}/>
+            Logowanie przez github
           </button>
           <button
             className={classes.facebookButton}
             onClick={handleSubmitFacebook}
           >
-            logowanie przez facebook
+            <FaFacebook className={classes.icon} />
+            Logowanie przez facebook
           </button>
         </div>
       </div>

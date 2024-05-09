@@ -1,0 +1,23 @@
+.container {
+  padding: 2rem 9%;
+  margin-top: 5rem;
+}
+
+.container h1 {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.postsContainer {
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.imgContainer img {
+  width: 300px;
+  height: 250px;
+  background: #f5b754;
+  border-radius: 1rem;
+}

@@ -3,7 +3,8 @@ import "./globals.css";
 import Header from "@/components/UI/header/Header";
 // import { AuthProvider } from "./AuthContext";
 import { getServerSession } from "next-auth";
-import SessionProvider from '../components/SessionProvider'
+import SessionProvider from "../components/SessionProvider";
+import Footer from "@/components/UI/footer/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -13,7 +14,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-
   const session = await getServerSession();
   return (
     <html lang="pl">
@@ -21,9 +21,9 @@ export default async function RootLayout({ children }) {
         <SessionProvider session={session}>
           <Header />
           {children}
+          <Footer />
         </SessionProvider>
       </body>
     </html>
   );
 }
-

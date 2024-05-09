@@ -1,0 +1,8 @@
+.container {
+  min-height: 70vh;
+  width: 35%;
+  margin: auto;
+  margin-bottom: 5rem;
+  background: rgb(248, 248, 248);
+  padding: 6rem 5%;
+}

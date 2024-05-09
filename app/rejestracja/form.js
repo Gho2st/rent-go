@@ -1,5 +1,5 @@
 "use client";
-
+import classes from "./form.module.css";
 import { FormEvent } from "react";
 
 export default function Form() {
@@ -12,17 +12,29 @@ export default function Form() {
         email: formData.get("email"),
         password: formData.get("password"),
         firstName: formData.get("firstName"),
-        lastName: formData.get("lastName")
+        lastName: formData.get("lastName"),
       }),
     });
     console.log({ response });
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="firstName" type="text" />
-      <input name="lastName" type="text" />
-      <input name="email" type="email" />
-      <input name="password" type="password" />
+    <form onSubmit={handleSubmit} className={classes.formContainer}>
+      <label htmlFor="firstName">
+        Imię
+        <input name="firstName" type="text" />
+      </label>
+      <label htmlFor="lastName">
+        Nazwisko
+        <input name="lastName" type="text" />
+      </label>
+      <label htmlFor="email">
+        Email
+        <input name="email" type="email" />
+      </label>
+      <label htmlFor="password">
+      Hasło
+        <input name="password" type="password" />
+      </label>
       <button type="submit">Register</button>
     </form>
   );

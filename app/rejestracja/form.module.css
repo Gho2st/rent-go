@@ -1,14 +1,10 @@
-
-.headers {
-  font-size: 1.3rem;
-}
-
-.container form {
+.formContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  margin: auto;
 }
-
-.container form input {
+.formContainer input {
   width: 100%;
   font-size: 1rem;
   padding: 1rem 1rem;
@@ -17,7 +13,7 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.container form button {
+.formContainer button {
   background: #f5b754;
   border: 0;
   margin-top: 1.5rem;
@@ -27,6 +23,6 @@
   width: 100%;
   font-weight: 700;
 }
-.container form button:hover{
-    cursor: pointer;
+.formContainer button:hover {
+  cursor: pointer;
 }

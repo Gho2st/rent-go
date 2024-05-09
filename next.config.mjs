@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: ["rent-go.s3.eu-central-1.amazonaws.com"],
+  },
+};
 
 export default nextConfig;
