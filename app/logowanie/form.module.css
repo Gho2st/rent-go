@@ -70,6 +70,20 @@
   cursor: pointer;
 }
 
+.googleButton {
+  width: 100%;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: #ff9554;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+.googleButton:hover {
+  cursor: pointer;
+}
 .icon {
   font-size: 2.5rem;
   vertical-align: middle;

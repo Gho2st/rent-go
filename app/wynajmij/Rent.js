@@ -5,12 +5,13 @@ import classes from "./Rent.module.css";
 
 const Rent = () => {
   const { data: session } = useSession();
-  const userId = session?.user?.id;
+  console.log(session.user);
+  const userId = session?.user?.dbID;
+  console.log(userId);
   const initialFormState = {
     title: "",
     name: "",
     price: null,
-    userID: userId,
     mainUrl: "",
   };
 
@@ -85,7 +86,7 @@ const Rent = () => {
     if (success && urls.length > 0) {
       const sendToApi = async () => {
         console.log("wyslane do add api");
-        console.log(userId);
+        console.log(session.user.dbID);
         // Set mainUrl as the first element of uploadedUrls
         const mainUrl = urls[0];
 
@@ -93,6 +94,7 @@ const Rent = () => {
         const dataToSend = {
           ...formState,
           mainUrl: mainUrl,
+          userID: userId,
         };
         console.log(dataToSend);
         const saveResponse = await fetch("/api/add", {

@@ -32,7 +32,7 @@ export default function Form() {
         <input name="email" type="email" />
       </label>
       <label htmlFor="password">
-      Hasło
+        Hasło
         <input name="password" type="password" />
       </label>
       <button type="submit">Register</button>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MdLogin } from "react-icons/md";
 import { FaFacebook } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
 
 export default function Form() {
   const router = useRouter();
@@ -41,6 +42,15 @@ export default function Form() {
       router.refresh();
     }
   };
+  const handleSubmitGoogle = async (e) => {
+    e.preventDefault();
+    const response = await signIn("google", { redirect: false });
+    console.log({ response });
+    if (!response?.error) {
+      router.push("/");
+      router.refresh();
+    }
+  };
 
   return (
     <>
@@ -70,7 +80,7 @@ export default function Form() {
         </form>
         <div className={classes.buttonsContainer}>
           <button className={classes.githubButton} onClick={handleSubmitGithub}>
-            <FaGithub className={classes.icon}/>
+            <FaGithub className={classes.icon} />
             Logowanie przez github
           </button>
           <button
@@ -79,6 +89,10 @@ export default function Form() {
           >
             <FaFacebook className={classes.icon} />
             Logowanie przez facebook
+          </button>
+          <button className={classes.googleButton} onClick={handleSubmitGoogle}>
+            <FaGoogle className={classes.icon} />
+            Logowanie przez Google
           </button>
         </div>
       </div>

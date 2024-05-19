@@ -36,3 +36,27 @@
 .openMenuContainer a:hover {
   color: grey;
 }
+
+.openMenuContainer button {
+  background: white;
+  border: 0;
+  text-align: left;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.openMenuContainer button:hover{
+  cursor: pointer;
+  color: grey;
+}
+
+.openMenuContainer p {
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+
+.openMenuContainer span {
+  color: green;
+  font-weight: bold;
+}

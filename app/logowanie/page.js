@@ -17,7 +17,7 @@ export default async function LoginPage() {
           <h1>
             Welcome back <FaCar  />
           </h1>
-          <h2>Welcome back! Please enter your details</h2>
+          <h2>Welcome back! Please choose your provider.</h2>
         </div>
         <Form />
         <Link className={classes.text} href={"/rejestracja"}>
