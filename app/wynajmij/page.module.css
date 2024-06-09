@@ -1,8 +1,21 @@
 .container {
   min-height: 70vh;
-  width: 35%;
   margin: auto;
   margin-bottom: 5rem;
-  background: rgb(248, 248, 248);
-  padding: 6rem 5%;
+  padding: 2rem 9%;
+}
+
+
+.formContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.imageContainer {
+  margin-top: 4rem;
+}
+
+.imageContainer img {
+  width: 33%;
+  border-radius: 1rem;
 }

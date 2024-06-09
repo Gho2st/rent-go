@@ -1,10 +1,10 @@
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/UI/header/Header";
 // import { AuthProvider } from "./AuthContext";
 import { getServerSession } from "next-auth";
 import SessionProvider from "../components/SessionProvider";
 import Footer from "@/components/UI/footer/Footer";
+import Navigation from "@/components/UI/navigation/Navigation";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -19,7 +19,7 @@ export default async function RootLayout({ children }) {
     <html lang="pl">
       <body className={montserrat.className}>
         <SessionProvider session={session}>
-          <Header />
+          <Navigation />
           {children}
           <Footer />
         </SessionProvider>

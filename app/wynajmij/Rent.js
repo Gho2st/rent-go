@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import classes from "./Rent.module.css";
+import Button from "@/components/UI/button/button";
 
 const Rent = () => {
   const { data: session } = useSession();
@@ -10,9 +11,20 @@ const Rent = () => {
   console.log(userId);
   const initialFormState = {
     title: "",
-    name: "",
+    loc: "",
+    description: "",
     price: null,
     mainUrl: "",
+    fuel: "",
+    type: "",
+    seats: null,
+    gear: "",
+    color: "",
+    mileage: null,
+    production: null,
+    power: null,
+    fuelUsage: null,
+    engine: null,
   };
 
   const [files, setFiles] = useState([]);
@@ -24,25 +36,11 @@ const Rent = () => {
   const handleFileChange = (e) => {
     setFiles((prevFiles) => [...prevFiles, ...Array.from(e.target.files)]);
   };
-  const handleTitleChange = (e) => {
-    const newTitle = e.target.value;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
-      title: newTitle,
-    }));
-  };
-  const handleNameChange = (e) => {
-    const newName = e.target.value;
-    setFormState((prevState) => ({
-      ...prevState,
-      name: newName,
-    }));
-  };
-  const handlePriceChange = (e) => {
-    const newPrice = e.target.value;
-    setFormState((prevState) => ({
-      ...prevState,
-      price: newPrice,
+      [name]: value,
     }));
   };
 
@@ -112,16 +110,16 @@ const Rent = () => {
   return (
     <>
       <div className={classes.container}>
-        <div className={classes.headers}>
-          <h1>Wynajmij swój samochod z Rent&Go</h1>
-        </div>
         <form onSubmit={handleSubmit}>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            multiple
-          />
+          <label>
+            Wybierz zdjęcia (max 8)
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              multiple
+            />
+          </label>
           <label>
             Tytuł
             <input
@@ -129,18 +127,17 @@ const Rent = () => {
               id="title"
               name="title"
               value={formState.title}
-              onChange={handleTitleChange}
+              onChange={handleInputChange}
             ></input>
           </label>
           <label>
-            Imię / Nazwa Firmy
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formState.name}
-              onChange={handleNameChange}
-            ></input>
+            Opis
+            <textarea
+              id="description"
+              name="description"
+              value={formState.description}
+              onChange={handleInputChange}
+            ></textarea>
           </label>
           <label>
             Cena za dobę
@@ -149,12 +146,120 @@ const Rent = () => {
               id="price"
               name="price"
               value={formState.price}
-              onChange={handlePriceChange}
+              onChange={handleInputChange}
             ></input>
           </label>
-          <button type="submit" disabled={uploading}>
-            {uploading ? "Uploading..." : "Upload"}
-          </button>
+          <label>
+            Lokalizacja
+            <input
+              type="text"
+              id="loc"
+              name="loc"
+              value={formState.loc}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Rodzaj paliwa
+            <input
+              type="text"
+              id="fuel"
+              name="fuel"
+              value={formState.fuel}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Typ nadwozia
+            <input
+              type="text"
+              id="type"
+              name="type"
+              value={formState.type}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Liczba miejsc
+            <input
+              type="number"
+              id="seats"
+              name="seats"
+              value={formState.seats}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Skrzynia biegów
+            <input
+              type="text"
+              id="gearbox"
+              name="gearbox"
+              value={formState.gearbox}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Kolor nadwozia
+            <input
+              type="text"
+              id="color"
+              name="color"
+              value={formState.color}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Rok produkcji
+            <input
+              type="number"
+              id="production"
+              name="production"
+              value={formState.production}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Przebieg
+            <input
+              type="number"
+              id="mileage"
+              name="mileage"
+              value={formState.mileage}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Moc silnika
+            <input
+              type="number"
+              id="power"
+              name="power"
+              value={formState.power}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Średnie spalanie
+            <input
+              type="number"
+              id="fuelUsage"
+              name="fuelUsage"
+              value={formState.fuelUsage}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Pojemność silnika
+            <input
+              type="number"
+              id="engine"
+              name="engine"
+              value={formState.engine}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <Button text={uploading ? "Przesyłanie..." : "Prześlij"} />
         </form>
       </div>
     </>

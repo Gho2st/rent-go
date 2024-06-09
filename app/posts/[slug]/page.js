@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import classes from "./page.module.css";
 import { IoMdContact } from "react-icons/io";
+import { FaRegHeart } from "react-icons/fa";
+
 import Link from "next/link";
 
 export default function Post({ params }) {
@@ -57,85 +59,99 @@ export default function Post({ params }) {
 
       {fetchedData && (
         <>
-          <h1>{fetchedData.title}</h1>
-          {postImages &&
-            postImages.map((imageUrl, index) => (
-              <Image
-                key={index}
-                src={imageUrl}
-                alt={`Image ${index}`}
-                width={250}
-                height={250}
-              />
-            ))}
-          <h2>{fetchedData.price}</h2>
-          <Link href={"/profil-uzytkownika/" + fetchedData.userID} hej="hej">
-            <h3>Wlascicielem jest {owner}</h3>
-          </Link>
-          {profileImage ? (
-            <Image
-              alt="zdjecie profilowe"
-              width={50}
-              height={50}
-              src={profileImage}
-            />
-          ) : (
-            <IoMdContact />
-          )}
-          <h4>Opinie</h4>
-          <h5>Lokalizacja pojazdu</h5>
+          <div className={classes.topContainer}>
+            <h1>{fetchedData.title}</h1>
+            <FaRegHeart />
+          </div>
+          <p>Lokalizacja pojazdu {fetchedData.loc}</p>
+          <h2>Opinie</h2>
+          <div className={classes.imageContainer}>
+            {postImages &&
+              postImages.map((imageUrl, index) => (
+                <Image
+                  key={index}
+                  src={imageUrl}
+                  alt={`Image ${index}`}
+                  width={330}
+                  height={330}
+                  className={classes.image}
+                />
+              ))}
+          </div>
+          <div className={classes.onwerContainer}>
+            {profileImage ? (
+              <div className={classes.iconContainer}>
+                <Link href={"/profil-uzytkownika/" + fetchedData.userID}>
+                  <Image
+                    alt="zdjecie profilowe"
+                    width={50}
+                    height={50}
+                    src={profileImage}
+                    className={classes.profileImage}
+                  />
+                </Link>
+                <div>
+                  <h2>Wlascicielem jest {owner}</h2>
+                  <p>Oceniany na: 5.0</p>
+                </div>
+              </div>
+            ) : (
+              <div className={classes.iconContainer}>
+                <Link href={"/profil-uzytkownika/" + fetchedData.userID}>
+                  <IoMdContact className={classes.icon} />
+                </Link>
+                <div>
+                  <h2>Wlascicielem jest {owner}</h2>
+                  <p>Oceniany na: 5.0</p>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className={classes.info}>
             <p>Więcej informacji</p>
-            <p>jakis opis heh fajny autko woz</p>
+            <p>{fetchedData.description}</p>
           </div>
           <div className={classes.listContainer}>
             <ul>
               <li>
                 <div>Rodzaj paliwa</div>
-                <div>Benzyna</div>
+                <div>{fetchedData.fuel}</div>
               </li>
               <li>
                 <div>Typ nadwozia</div>
-                <div>kabriolet</div>
+                <div>{fetchedData.type}</div>
               </li>
               <li>
                 <div>Liczba miejsc</div>
-                <div>2</div>
+                <div>{fetchedData.seats}</div>
               </li>
               <li>
                 <div>Skrzynia biegów</div>
-                <div>manualna</div>
+                <div>{fetchedData.gear}</div>
               </li>
               <li>
                 <div>Kolor nadwozia</div>
-                <div>czerwony</div>
+                <div>{fetchedData.color}</div>
               </li>
               <li>
                 <div>Rok produkcji</div>
-                <div>2002</div>
+                <div>{fetchedData.production}</div>
               </li>
               <li>
                 <div>Przebieg (km)</div>
-                <div>192 000 km</div>
+                <div>{fetchedData.mileage} km</div>
               </li>
               <li>
-                <div>Masa własna (kg)</div>
-                <div>1.100</div>
-              </li>
-              <li>
-                <div>Moc silnika</div> <div>135 km</div>
+                <div>Moc silnika</div> <div>{fetchedData.power} km</div>
               </li>
               <li>
                 <div>Średnie spalanie</div>
-                <div>6l/100km</div>
-              </li>
-              <li>
-                <div>Pojemność zbiornika paliwa (l)</div>
-                <div>45 l</div>
+                <div>{fetchedData.fuelUsage}l/100km</div>
               </li>
               <li>
                 <div>Pojemność silnika</div>
-                <div>1.998 ccm</div>
+                <div>{fetchedData.engine} ccm</div>
               </li>
             </ul>
           </div>

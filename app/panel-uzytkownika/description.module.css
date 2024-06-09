@@ -1,9 +1,30 @@
+.container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+.editDescription {
+  display: inline-block;
+  margin-left: 1rem;
+  color: grey;
+  font-size: 0.95rem;
+}
+.editDescription:hover{
+  color: green;
+  cursor: pointer;
+}
+
 .modal {
   width: 650px;
   height: 450px;
-  background: rgb(235, 179, 23);
+  background: rgb(0, 0, 0);
   margin: auto;
-  margin-top: 5rem;
+  margin-top: 15rem;
   color: white;
   border: 0;
   border-radius: 1rem;
@@ -16,14 +37,17 @@
 .closeButton {
   padding: 1rem 1rem;
   border: 0;
-  color: white;
   border-radius: 1rem;
   display: flex;
   justify-content: flex-end;
 }
 .icon {
   font-size: 2.5rem;
-  color: black;
+  color: rgb(255, 255, 255);
+}
+.icon:hover {
+  color: green;
+  cursor: pointer;
 }
 .content {
   width: 100%;
@@ -37,20 +61,14 @@
   max-width: 100%;
   margin: auto;
   height: 200px;
+  font-size: 1rem;
   border: 0;
   padding: 1rem;
   border-radius: 1rem;
 }
 
 .content button {
-  border: 0;
-  border-radius: 1rem;
   width: 200px;
-  padding: 1rem 1rem;
   margin: auto;
   margin-top: 1.5rem;
-  background: black;
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
 }

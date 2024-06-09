@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import classes from "./Posts.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import Heading from "@/components/UI/heading/Heading";
 
 export default function Posts() {
   const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ export default function Posts() {
 
   return (
     <div className={classes.container}>
-      <h1>Pick something for you!</h1>
+      <Heading text="Wybierz coś dla siebie!" />
       {loading && (
         <p className={classes.loading}>Wczytujemy ogłoszenia dla Ciebie...</p>
       )}

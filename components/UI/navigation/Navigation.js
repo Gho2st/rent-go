@@ -1,17 +1,14 @@
-'use client'
-import classes from "./Header.module.css";
+"use client";
+import classes from "./Navigation.module.css";
 import Link from "next/link";
 import { RxAvatar } from "react-icons/rx";
 import { RxHamburgerMenu } from "react-icons/rx";
 import RightNav from "./RightNav";
 
-export default function Header() {
-
-  function menuClickHandler(){
-    console.log("clicked")
+export default function Navigation() {
+  function menuClickHandler() {
+    console.log("clicked");
   }
-
-
 
   return (
     <div className={classes.Container}>
@@ -23,7 +20,7 @@ export default function Header() {
         <Link href={"/o-firmie"}>O firmie</Link>
         <Link href={"/wspolpraca"}>Współpraca</Link>
       </div>
-      <RightNav/>
+      <RightNav />
     </div>
   );
 }

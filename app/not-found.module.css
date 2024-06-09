@@ -1,0 +1,21 @@
+.container {
+  text-align: center;
+  padding: 3rem;
+}
+.container h1 {
+  font-size: 3rem;
+}
+
+.container p {
+  margin-top: 1.2rem;
+  color: grey;
+}
+
+.container svg {
+  display: block;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-size: 8rem;
+  color: red;
+}

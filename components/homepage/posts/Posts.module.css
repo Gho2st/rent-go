@@ -22,8 +22,12 @@
 .imgContainer img{
   border-radius: 0.6rem;
 }
+.post{
+  transition: all 0.2s ease;
+}
 
 .post:hover {
   cursor: pointer;
-  scale: 1.01;
+  scale: 1.05;
+  transform: translateY(-4px);
 }

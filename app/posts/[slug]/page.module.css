@@ -1,13 +1,50 @@
 .container {
-  padding: 2rem 12%;
+  padding: 2rem 16%;
   min-height: 70vh;
 }
-.container h1 {
-  font-size: 2.25rem;
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.topContainer h1 {
+  font-size: 2.2rem;
   font-weight: 500;
   margin-bottom: 1rem;
 }
+.topContainer svg {
+  font-size: 1.7rem;
+}
 
+.imageContainer {
+  margin: 3rem 0 3rem;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.image {
+  border-radius: 0.5rem;
+}
+
+.onwerContainer {
+  display: flex;
+}
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5rem;
+}
+
+.profileImage {
+  margin-right: 0.5rem;
+  border-radius: 1.5rem;
+}
 .loadingContainer {
   display: flex;
   justify-content: center;
@@ -16,10 +53,6 @@
 .loading {
   text-align: center;
   font-size: 1.8rem;
-}
-
-.container img {
-  border-radius: 0.7rem;
 }
 
 .info {

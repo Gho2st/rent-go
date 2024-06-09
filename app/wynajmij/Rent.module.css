@@ -1,32 +1,31 @@
+.container {
+  width: 33.333%;
+}
 
 .headers {
   font-size: 1.3rem;
 }
 
 .container form {
-  display: flex;
-  flex-direction: column;
+  margin-top: 2.5rem;
 }
 
-.container form input {
+.container form label {
+  font-weight: 500;
+}
+
+.container form input,
+.container form textarea {
   width: 100%;
   font-size: 1rem;
-  padding: 1rem 1rem;
+  padding: 0.8rem 1rem;
   border: 0.1px solid black;
   border-radius: 0.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.container form button {
-  background: #f5b754;
-  border: 0;
-  margin-top: 1.5rem;
-  padding: 1rem 1.5rem;
-  border-radius: 0.8rem;
-  font-size: 1.3rem;
-  width: 100%;
-  font-weight: 700;
-}
-.container form button:hover{
-    cursor: pointer;
+
+.container form textarea {
+  height: 150px;
+  resize: none;
 }

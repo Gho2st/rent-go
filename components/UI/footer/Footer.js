@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <div className={classes.footerContainer}>
       <div className={classes.topContainer}>
-        <h5>Stay up to date on all the latest news.</h5>
+        <h5>Bądź na bieząco z najnowszymi informacjami.</h5>
         <div className={classes.input}>
           <input type="email" placeholder="Your email"></input>
           <div className={classes.icon}>
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={classes.downContainer}>
-        <h6>Realizacja projektu DJJ Sofware</h6>
+        <h6>Realizacja projektu Domiweb</h6>
         <p>Wszystkie prawa zastrzezone</p>
       </div>
     </div>

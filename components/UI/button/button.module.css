@@ -1,0 +1,16 @@
+.button {
+  display: inline-block;
+  background: #f9b056;
+  border: 0;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  width: auto;
+  transition: all 0.15s ease;
+}
+
+.button:hover {
+  transform: scale(1.05) translateY(-1px);
+  cursor: pointer;
+}
