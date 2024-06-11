@@ -1,6 +1,7 @@
 .Container {
   position: relative;
   cursor: pointer;
+  z-index: 10;
 }
 .avatarContainer:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -27,6 +28,8 @@
   left: -190px;
   width: 300px;
   border-radius: 1rem;
+  background: white;
+  z-index: 111;
 }
 .openMenuContainer a {
   font-size: 0.9rem;
@@ -45,7 +48,7 @@
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
-.openMenuContainer button:hover{
+.openMenuContainer button:hover {
   cursor: pointer;
   color: grey;
 }

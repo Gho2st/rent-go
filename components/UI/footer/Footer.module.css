@@ -28,7 +28,7 @@
   justify-content: center;
   align-items: center;
   margin-left: 3rem;
-  background: #F9B056;
+  background: #f9b056;
   width: 50px;
   height: 50px;
   color: black;
@@ -72,4 +72,12 @@
 }
 .downContainer h6 {
   font-size: 1rem;
+}
+
+.downContainer a {
+  color: aquamarine;
+}
+
+.downContainer a:hover{
+  color: rgb(89, 178, 148);
 }

@@ -12,13 +12,13 @@ const handler = NextAuth({
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub;
-        console.log("User ID from session:", session.user.id);
-        console.log(session);
+        console.log("token sub to")
+        console.log(token.sub)
+        console.log(session)
         const [isUserExist] = await pool.execute(
           "SELECT * FROM uzytkownicy WHERE email = ?",
           [session.user.email]
         );
-        console.log(isUserExist);
         if (isUserExist.length > 0) {
           session.user.dbID = isUserExist[0].id;
           session.user.descriptionDB = isUserExist[0].opis;
@@ -31,6 +31,8 @@ const handler = NextAuth({
           );
         }
       }
+      console.log('hej chujku')
+      console.log(session)
       return session;
     },
   },

@@ -52,7 +52,7 @@ export default function RightNav() {
               {session && (
                 <Link href={"/panel-uzytkownika"}>Panel uzytkownika</Link>
               )}
-              <Link href={"/rejestracja"} onClick={chooseMenuLink}>
+              <Link href={"/centrum-pomocy"} onClick={chooseMenuLink}>
                 Centrum Pomocy
               </Link>
               <AuthButton />

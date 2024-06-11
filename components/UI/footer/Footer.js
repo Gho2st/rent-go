@@ -55,7 +55,10 @@ export default function Footer() {
         </div>
       </div>
       <div className={classes.downContainer}>
-        <h6>Realizacja projektu Domiweb</h6>
+        <h6>
+          Realizacja projektu
+          <Link href={"https://www.domiweb.pl/"}> Domiweb</Link>
+        </h6>
         <p>Wszystkie prawa zastrzezone</p>
       </div>
     </div>

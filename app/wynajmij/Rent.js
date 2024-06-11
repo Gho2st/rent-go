@@ -135,6 +135,7 @@ const Rent = () => {
             <textarea
               id="description"
               name="description"
+              placeholder="Przekonaj potencjalnego klienta do swojego samochodu! (max 500 słów)."
               value={formState.description}
               onChange={handleInputChange}
             ></textarea>
@@ -161,23 +162,32 @@ const Rent = () => {
           </label>
           <label>
             Rodzaj paliwa
-            <input
-              type="text"
+            <select
               id="fuel"
               name="fuel"
               value={formState.fuel}
               onChange={handleInputChange}
-            ></input>
+            >
+              <option value="benzyna">Benzyna</option>
+              <option value="diesel">Diesel</option>
+              <option value="gaz">Gaz</option>
+              <option value="hybryda">Hybryda</option>
+            </select>
           </label>
+
           <label>
             Typ nadwozia
-            <input
-              type="text"
+            <select
               id="type"
               name="type"
               value={formState.type}
               onChange={handleInputChange}
-            ></input>
+            >
+              <option value="sedan">Sedan</option>
+              <option value="combi">Combi</option>
+              <option value="suv">Suv</option>
+              <option value="van">Van</option>
+            </select>
           </label>
           <label>
             Liczba miejsc
@@ -191,13 +201,15 @@ const Rent = () => {
           </label>
           <label>
             Skrzynia biegów
-            <input
-              type="text"
+            <select
               id="gearbox"
               name="gearbox"
               value={formState.gearbox}
               onChange={handleInputChange}
-            ></input>
+            >
+              <option value="manualna">Manualna</option>
+              <option value="automatyczna">Automatyczna</option>
+            </select>
           </label>
           <label>
             Kolor nadwozia
