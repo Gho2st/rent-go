@@ -3,10 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    console.log("tutaj user-posts api");
 
     const data = await request.json();
-    console.log(data);
 
     const email = data.email;
 
@@ -38,7 +36,6 @@ export async function POST(request) {
       userID,
     ]);
 
-    console.log(posts)
 
     const json = { posts };
 

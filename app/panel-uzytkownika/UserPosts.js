@@ -45,8 +45,8 @@ export default function UserPosts(props) {
       )}
       <div className={classes.postsContainer}>
         {posts.map((post, index) => (
-          <Link href={"/posts/" + post.id}>
-            <div className={classes.post} key={post.id}>
+          <Link href={"/posts/" + post.id} key={post.id}>
+            <div className={classes.post}>
               <div className={classes.imgContainer}>
                 <Image
                   alt={index}

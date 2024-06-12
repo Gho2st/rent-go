@@ -1,0 +1,10 @@
+.profile img {
+  border-radius: 1.5rem;
+}
+.profile {
+  display: flex;
+  gap: 1rem;
+}
+.profile h1 {
+  font-size: 2.7rem;
+}

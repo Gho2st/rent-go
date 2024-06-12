@@ -9,12 +9,21 @@ import { NextResponse } from "next/server";
 
 const handler = NextAuth({
   callbacks: {
-    session: async ({ session, token }) => {
+    async jwt({ token, user, session }) {
+      console.log("jwt callback", { token, user, session });
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          hej: "hej",
+        };
+      }
+      return token;
+    },
+
+    async session({ session, token, user }) {
       if (session?.user) {
         session.user.id = token.sub;
-        console.log("token sub to")
-        console.log(token.sub)
-        console.log(session)
         const [isUserExist] = await pool.execute(
           "SELECT * FROM uzytkownicy WHERE email = ?",
           [session.user.email]
@@ -31,8 +40,6 @@ const handler = NextAuth({
           );
         }
       }
-      console.log('hej chujku')
-      console.log(session)
       return session;
     },
   },

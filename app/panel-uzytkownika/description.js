@@ -1,31 +1,50 @@
 "use client";
 import { useState, useEffect } from "react";
-import Modal from "react-modal";
 import classes from "./description.module.css";
-import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useSession } from "next-auth/react";
 import Button from "@/components/UI/button/button";
 import { CiStickyNote } from "react-icons/ci";
 
-export default function Description() {
-  const [description, setDescription] = useState("Opis");
+export default function Description(props) {
+  const [description, setDescription] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const { data: session } = useSession();
+  const userEmail = props.userEmail;
+  const [loading, setLoading] = useState(true);
+  const [editDescription, setEditDescription] = useState(false);
 
-  // Use useEffect to set the initial description from session
   useEffect(() => {
-    if (session?.user?.descriptionDB) {
-      setDescription(session.user.descriptionDB);
-    }
-  }, [session]);
+    const fetchData = async () => {
+      try {
+        if (!userEmail) {
+          throw new Error("Brak dostępu do identyfikatora użytkownika");
+        }
+        const response = await fetch("/api/user-info", {
+          method: "POST",
+          body: JSON.stringify({ email: userEmail }),
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const jsonData = await response.json();
+        setDescription(jsonData.data.opis);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userEmail]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handleSubmit called");
     try {
-      const response = await fetch(`/api/description`, {
+      const response = await fetch("/api/description", {
         method: "POST",
         body: JSON.stringify({
-          dbID: session.user.dbID,
+          email: userEmail,
           description: description,
         }),
         headers: {
@@ -38,56 +57,43 @@ export default function Description() {
       }
 
       const responseData = await response.json();
-      console.log("Dane z serwera:", responseData);
-
-      // Update the session's user description locally
-      session.user.descriptionDB = description;
-      setShowModal(false);
+      console.log("Response from server:", responseData);
+      setEditDescription(false);
     } catch (error) {
       console.error("Błąd podczas wysyłania żądania:", error);
     }
   };
 
-  function changeDescriptionHandler(event) {
+  const changeDescriptionHandler = (event) => {
     setDescription(event.target.value);
+  };
+
+  const editDescriptionHandler = () => {
+    setEditDescription(!editDescription);
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
   }
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   return (
     <div className={classes.container}>
       <p className={classes.description}>{description}</p>
-      <p onClick={handleOpenModal} className={classes.editDescription}>
+      <p className={classes.editDescription} onClick={editDescriptionHandler}>
         Edytuj opis <CiStickyNote />
       </p>
 
-      <Modal
-        isOpen={showModal}
-        onRequestClose={handleCloseModal}
-        contentLabel="Pełna treść"
-        className={classes.modal}
-      >
-        <div className={classes.modalContent}>
-          <div onClick={handleCloseModal} className={classes.closeButton}>
-            <IoIosCloseCircleOutline className={classes.icon} />
-          </div>
-          <div className={classes.content}>
-            <h2>Wpisz swój opis</h2>
-            <textarea
-              name="description"
-              value={description}
-              onChange={changeDescriptionHandler}
-            ></textarea>
-            <Button onClick={handleSubmit} text="Zatwierdź" />
-          </div>
+      {editDescription && (
+        <div className={classes.content}>
+          <h2>Wpisz swój opis</h2>
+          <textarea
+            name="description"
+            value={description}
+            onChange={changeDescriptionHandler}
+          ></textarea>
+          <Button onClick={handleSubmit} text="Zatwierdź" />
         </div>
-      </Modal>
+      )}
     </div>
   );
 }

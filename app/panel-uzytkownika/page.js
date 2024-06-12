@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import classes from "./page.module.css";
-import Image from "next/image";
 import Description from "./description";
 import UserPosts from "./UserPosts";
+import Person from "./person";
 
-export default async function wynajmij() {
+export default async function panel() {
   const session = await getServerSession();
 
   console.log("ponizej dane z sesji");
@@ -17,17 +17,13 @@ export default async function wynajmij() {
   return (
     <div className={classes.container}>
       <div>
-        <div className={classes.profile}>
-          <h1 className={classes.name}>{session.user.name}</h1>
-          <Image
-            alt="zdjecie profilowe uzytkownika"
-            src={session.user.image}
-            width={50}
-            height={50}
-          />
-        </div>
+        <Person
+          name={session.user.name}
+          image={session.user.image}
+          userEmail={session.user.email}
+        />
         <p>0.0 (0 ocen)</p>
-        <Description />
+        <Description userEmail={session.user.email} />
       </div>
       <UserPosts userEmail={session.user.email} />
     </div>

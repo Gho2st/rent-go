@@ -4,7 +4,7 @@ import classes from "./button.module.css";
 import { motion } from "framer-motion";
 
 export default function Button(props) {
-  const { link, text } = props;
+  const { link, text, onClick } = props;
 
   return (
     <>
@@ -13,7 +13,9 @@ export default function Button(props) {
           {text}
         </Link>
       ) : (
-        <button className={classes.button}>{text}</button>
+        <button onClick={onClick} className={classes.button}>
+          {text}
+        </button>
       )}
     </>
   );
