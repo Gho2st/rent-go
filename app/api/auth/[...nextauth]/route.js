@@ -15,7 +15,6 @@ const handler = NextAuth({
         return {
           ...token,
           id: user.id,
-          hej: "hej",
         };
       }
       return token;

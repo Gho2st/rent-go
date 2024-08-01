@@ -6,7 +6,7 @@ export default function Homepage(){
     return(
         <div className={classes.Container}>
             <SearchBar/>
-            <Posts/>
+            {/* <Posts/> */}
         </div>
     )
 }

@@ -4,7 +4,8 @@ import Image from "next/image";
 import classes from "./page.module.css";
 import { IoMdContact } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
-
+import { FaHeart } from "react-icons/fa6";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Post({ params }) {
@@ -12,9 +13,60 @@ export default function Post({ params }) {
   const [owner, setOwner] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [postImages, setPostImages] = useState(null);
+  const [isFavPost, setIsFavPost] = useState(false);
+
+  const { data: session } = useSession();
+  console.log(session.user);
+  const userEmail = session?.user?.email;
+  console.log(userEmail);
+  console.log(params.slug)
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log(isFavPost);
+  }, [isFavPost]);
+
+  useEffect(() => {
+    async function fetchFavoriteStatus() {
+      try {
+        const response = await fetch(
+          `/api/user-fav?postID=${params.slug}&userEmail=${userEmail}`
+        );
+        const data = await response.json();
+        console.log("dane z get po stronie klienta")
+        setIsFavPost(data.isFavPost);
+        console.log(isFavPost)
+      } catch (error) {
+        console.error("Error fetching favorite status:", error);
+      }
+    }
+
+    fetchFavoriteStatus();
+  }, [params.slug, userEmail]);
+
+  const handleFavPost = async () => {
+    const newFavStatus = !isFavPost;
+    setIsFavPost(newFavStatus);
+    await fetchFavData(newFavStatus);
+  };
+
+  const fetchFavData = async (newFavStatus) => {
+    try {
+      await fetch("/api/user-fav", {
+        method: "POST",
+        body: JSON.stringify({
+          isFavPost: newFavStatus,
+          postID: params.slug,
+          userEmail: userEmail,
+        }),
+      });
+    } catch (error) {
+      console.error("error updating favourite post", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -49,6 +101,15 @@ export default function Post({ params }) {
       console.error("Error fetching data:", error);
     }
   };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
   return (
     <div className={classes.container}>
       {!fetchedData && (
@@ -61,7 +122,11 @@ export default function Post({ params }) {
         <>
           <div className={classes.topContainer}>
             <h1>{fetchedData.title}</h1>
-            <FaRegHeart />
+            {isFavPost ? (
+              <FaHeart onClick={handleFavPost} />
+            ) : (
+              <FaRegHeart onClick={handleFavPost} />
+            )}
           </div>
           <p>Lokalizacja pojazdu {fetchedData.loc}</p>
           <h2>Opinie</h2>
@@ -106,6 +171,11 @@ export default function Post({ params }) {
                 </div>
               </div>
             )}
+          </div>
+          <div>
+            <h3>Pojazd dostepny w dniach:</h3>
+            <p>od {formatDate(fetchedData.startDate)}</p>
+            <p>do {formatDate(fetchedData.endDate)}</p>
           </div>
 
           <div className={classes.info}>

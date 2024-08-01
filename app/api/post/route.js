@@ -12,14 +12,14 @@ const s3Client = new S3Client({
 
 export async function POST(request) {
   try {
-    console.log("hej tu api /post");
+    // console.log("hej tu api /post");
     const data = await request.json();
-    console.log(data);
+    // console.log(data);
     const id = data.id;
     const [post] = await pool.query("SELECT * FROM post WHERE id= ?", [id]);
-    console.log({ post });
+    // console.log({ post });
     const userID = post[0].userID;
-    console.log(post[0].title);
+    // console.log(post[0].title);
     const [owner] = await pool.query(
       "SELECT firstName, lastName, profil_image from uzytkownicy WHERE id = ?",
       [userID]
@@ -45,6 +45,7 @@ export async function POST(request) {
       post: post,
       owner: owner,
       images: imageUrls,
+      userID: userID,
     });
   } catch (error) {
     console.log("error: ", error);

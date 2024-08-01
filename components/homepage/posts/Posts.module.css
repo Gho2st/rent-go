@@ -33,3 +33,9 @@
   scale: 1.05;
   transform: translateY(-6px);
 }
+
+.loc {
+  color: grey;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}

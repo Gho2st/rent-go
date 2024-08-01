@@ -22,9 +22,11 @@ export async function POST(request) {
     const power = data.power;
     const fuelUsage = data.fuelUsage;
     const engine = data.engine;
+    const startDate = data.startDate;
+    const endDate = data.endDate;
     console.log(mainUrl);
     const [response] = await pool.execute(
-      "INSERT INTO post (userID, imageurl, title, price, loc, description, fuel, type, seats, gear, color, mileage, production, power, fuelUsage, engine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO post (userID, imageurl, title, price, loc, description, fuel, type, seats, gear, color, mileage, production, power, fuelUsage, engine, startDate, endDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         userID,
         mainUrl,
@@ -42,6 +44,8 @@ export async function POST(request) {
         power,
         fuelUsage,
         engine,
+        startDate,
+        endDate,
       ]
     );
     console.log({ response });

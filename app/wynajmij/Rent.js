@@ -25,6 +25,8 @@ const Rent = () => {
     power: null,
     fuelUsage: null,
     engine: null,
+    startDate: null,
+    endDate: null,
   };
 
   const [files, setFiles] = useState([]);
@@ -141,7 +143,7 @@ const Rent = () => {
             ></textarea>
           </label>
           <label>
-            Cena za dobę
+            Cena za dobę (zł)
             <input
               type="number"
               id="price"
@@ -202,9 +204,9 @@ const Rent = () => {
           <label>
             Skrzynia biegów
             <select
-              id="gearbox"
-              name="gearbox"
-              value={formState.gearbox}
+              id="gear"
+              name="gear"
+              value={formState.gear}
               onChange={handleInputChange}
             >
               <option value="manualna">Manualna</option>
@@ -232,7 +234,7 @@ const Rent = () => {
             ></input>
           </label>
           <label>
-            Przebieg
+            Przebieg (km)
             <input
               type="number"
               id="mileage"
@@ -242,7 +244,7 @@ const Rent = () => {
             ></input>
           </label>
           <label>
-            Moc silnika
+            Moc silnika (km)
             <input
               type="number"
               id="power"
@@ -252,7 +254,7 @@ const Rent = () => {
             ></input>
           </label>
           <label>
-            Średnie spalanie
+            Średnie spalanie (l/100km)
             <input
               type="number"
               id="fuelUsage"
@@ -262,12 +264,32 @@ const Rent = () => {
             ></input>
           </label>
           <label>
-            Pojemność silnika
+            Pojemność silnika (cm3)
             <input
               type="number"
               id="engine"
               name="engine"
               value={formState.engine}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Od kiedy chcesz wynająć?
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              value={formState.startDate}
+              onChange={handleInputChange}
+            ></input>
+          </label>
+          <label>
+            Do kiedy chcesz wynająć?
+            <input
+              type="date"
+              id="endDate"
+              name="endDate"
+              value={formState.endDate}
               onChange={handleInputChange}
             ></input>
           </label>

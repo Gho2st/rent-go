@@ -1,14 +1,37 @@
 import pool from "@/lib/db";
-import AWS from "aws-sdk";
-
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  const [posts] = await pool.query("SELECT * FROM post"); // the name of the table is post
+export async function GET(req) {
+  const { searchParams } = new URL(req.url);
+  const loc = searchParams.get("loc") || "";
+  const startDate = searchParams.get("startDate") || "";
+  const endDate = searchParams.get("endDate") || "";
 
-  const json = {
-    posts,
-  };
+  let query = "SELECT * FROM post WHERE 1=1";
+  const queryParams = [];
 
-  return NextResponse.json(json);
+  if (loc) {
+    query += " AND loc = ?";
+    queryParams.push(loc);
+  }
+
+  if (startDate) {
+    query += " AND startDate >= ?";
+    queryParams.push(startDate);
+  }
+
+  if (endDate) {
+    query += " AND endDate <= ?";
+    queryParams.push(endDate);
+  }
+
+  try {
+    const [posts] = await pool.query(query, queryParams);
+    return NextResponse.json({ posts });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Error fetching posts" },
+      { status: 500 }
+    );
+  }
 }
