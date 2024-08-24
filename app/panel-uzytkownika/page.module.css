@@ -3,3 +3,11 @@
   padding: 2rem 9%;
   margin: auto;
 }
+
+.container h2 {
+  padding: 2rem;
+}
+
+.switchPostsContainer {
+  display: flex;
+}

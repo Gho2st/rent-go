@@ -4,6 +4,7 @@ import classes from "./page.module.css";
 import Description from "./description";
 import UserPosts from "./UserPosts";
 import Person from "./person";
+import SwitchLogic from "./switchLogic";
 
 export default async function panel() {
   const session = await getServerSession();
@@ -25,7 +26,7 @@ export default async function panel() {
         <p>0.0 (0 ocen)</p>
         <Description userEmail={session.user.email} />
       </div>
-      <UserPosts userEmail={session.user.email} />
+      <SwitchLogic userEmail={session.user.email} />
     </div>
   );
 }

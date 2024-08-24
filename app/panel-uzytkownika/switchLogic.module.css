@@ -1,0 +1,10 @@
+.switchPostsContainer h2 {
+  padding: 2rem;
+}
+.switchPostsContainer h2:hover {
+  cursor: pointer;
+}
+
+.switchPostsContainer {
+  display: flex;
+}

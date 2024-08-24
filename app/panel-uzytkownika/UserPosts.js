@@ -39,7 +39,6 @@ export default function UserPosts(props) {
   };
   return (
     <div className={classes.container}>
-      <h2>Twoje posty</h2>
       {loading && (
         <p className={classes.loading}>Wczytujemy ogłoszenia dla Ciebie...</p>
       )}
